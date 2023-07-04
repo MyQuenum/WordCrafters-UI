@@ -1,5 +1,5 @@
 <template>
-    <header class="w-full bg-black text-white p-3 md:p-6 flex items-center  sticky top-0 left-0 z-50" :class="auth.state? 'justify-between' : 'justify-center'">
+    <header class="w-full bg-black text-white p-3 md:p-6 flex items-center  sticky top-0 left-0 z-50" :class="headerClass">
         <h1 class="font-bela text-4xl md:text-5xl relative flex-initial">
             <span class="absolute left-0">W</span>
             <span class="text-orange-500 ml-[23px] md:ml-[29px]">C</span>
@@ -44,8 +44,15 @@
 <script setup>
 
 import  {authInstance} from '@/stores/auth.js';
+import { onBeforeUpdate, ref, watchEffect } from 'vue';
 
-const auth = authInstance();
+const auth = ref(authInstance());
+const headerClass = ref('');
+
+watchEffect(()=>{
+    headerClass.value = auth.value.state ? 'justify-between' : 'justify-center';
+    console.log(headerClass.value);
+});
 </script>
 
     

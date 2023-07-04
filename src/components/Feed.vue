@@ -21,13 +21,13 @@
 
 <script setup>
 
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, onBeforeMount } from 'vue';
     import axios from 'axios';
 
 
     const posts = ref([]);
 
-    onMounted(
+    onBeforeMount(
         () =>{
             axios.get('/feed').then(
                 response => {

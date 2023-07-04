@@ -17,7 +17,8 @@
 </template>
 
 <script setup>
-import { NavigationFailureType, isNavigationFailure, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 import axios from 'axios';
 import { reactive } from 'vue';
@@ -34,22 +35,18 @@ const newUser = reactive({
 
 
 function signin() {
-    // axios.post('/signin', {
-    //     name: user.name,
-    //     password: user.password
-    // }).then(response => {
-    //     if (response.data.token) {
-    //         localStorage.setItem('WC-token', JSON.stringify(response.data.token));
+    axios.post('/signin', {
+        name: user.name,
+        password: user.password
+    }).then(response => {
+        if (response.data.token) {
+            localStorage.setItem('WC-token', JSON.stringify(response.data.token));
             
-    //         const router = useRouter();
-    //         router.push('/');
-    //     }
-    // }).catch(error => {
-    //         console.error(error);
-    // });
-
-    const router = useRouter();
-    router.push('/');
+            router.push('/');
+        }
+    }).catch(error => {
+            console.error(error);
+    });
 }
 
 function signup() {
@@ -61,13 +58,7 @@ function signup() {
         if (response.data.token) {
             localStorage.setItem('WC-token', JSON.stringify(response.data.token));
 
-            const router = useRouter();
-            router.push('/').catch(failure => {
-                if (isNavigationFailure(failure, NavigationFailureType.redirected)) {
-                    const router = useRouter();
-                    router.push('/');
-                }
-            });
+            router.push('/');
         }
     }).catch(error => {
             console.error(error);
